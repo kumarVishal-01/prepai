@@ -372,10 +372,10 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for the full tex
 
 ## 👤 Author
 
-**Antigravity** (Google Deepmind Team)
+**Vishal Kumar**
 
-- GitHub: [@google-deepmind](https://github.com/google-deepmind)
-- Website: [deepmind.google](https://deepmind.google)
+- GitHub: [@kumarVishal-01](https://github.com/kumarVishal-01)
+- LinkedIn: [Vishal Kumar](https://linkedin.com/in/kumarVishal-01)
 
 ---
 
