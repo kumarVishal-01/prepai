@@ -82,16 +82,19 @@ const port = process.env.PORT || 5000;
 
 // Enable CORS with credentials support for separate deployment
 const allowedOrigins = process.env.FRONTEND_URL
-  ? process.env.FRONTEND_URL.split(',').map(url => url.trim())
+  ? process.env.FRONTEND_URL.split(',').map(url => url.trim().replace(/\/$/, ''))
   : ['http://localhost:5173'];
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like same-origin static assets or mobile/curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+    
+    const sanitizedOrigin = origin.trim().replace(/\/$/, '');
+    if (allowedOrigins.indexOf(sanitizedOrigin) !== -1 || allowedOrigins.includes('*')) {
       callback(null, true);
     } else {
+      console.warn(`[CORS Blocked] Origin: "${origin}" is not in allowed origins:`, allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },

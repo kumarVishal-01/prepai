@@ -1,5 +1,6 @@
 {
-  "name": "placement-interview-workspace",
+  "name": "prepai",
+  "description": "AI-powered placement preparation platform with adaptive mock interviews, RAG-based learning, and coding assessments.",
   "private": true,
   "scripts": {
     "install:all": "npm install --prefix frontend && npm install --prefix backend",
