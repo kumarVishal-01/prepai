@@ -663,11 +663,27 @@ DOCUMENT CONTEXT:
 ${context || 'No matching documents found.'}
 ---`;
 
-    // Map history to Google Generative AI chat format
-    const history = (thread.messages || []).map(msg => ({
-      role: msg.role === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.text }]
-    }));
+    // Map history to Google Generative AI chat format, filtering out system notifications
+    let history = [];
+    const rawMessages = (thread.messages || []).filter(msg => msg.text && !msg.text.startsWith('📁 [System Notification]'));
+    
+    for (const msg of rawMessages) {
+      const role = msg.role === 'user' ? 'user' : 'model';
+      // Ensure we don't start with 'model'
+      if (history.length === 0 && role === 'model') {
+        continue;
+      }
+      
+      // If the last message has the same role, append text. Otherwise push new entry.
+      if (history.length > 0 && history[history.length - 1].role === role) {
+        history[history.length - 1].parts[0].text += '\n' + msg.text;
+      } else {
+        history.push({
+          role,
+          parts: [{ text: msg.text }]
+        });
+      }
+    }
 
     const chat = model.startChat({
       history,
